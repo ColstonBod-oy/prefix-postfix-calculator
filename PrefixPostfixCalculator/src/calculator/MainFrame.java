@@ -15,13 +15,6 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
-    private double temp;
-    private double resTemp;
-    boolean isPointPressed = false;
-    boolean isDividePressed = false;
-    boolean isMultiplyPressed = false;
-    boolean isSubtractPressed = false;
-    boolean isAddPressed = false;
     String display = "";
     
     public MainFrame() {
@@ -43,8 +36,8 @@ public class MainFrame extends javax.swing.JFrame {
         digitDisplayText = new javax.swing.JTextField();
         numPadPanel = new javax.swing.JPanel();
         ceBtn = new javax.swing.JButton();
-        cBtn = new javax.swing.JButton();
-        backBtn = new javax.swing.JButton();
+        openingBtn = new javax.swing.JButton();
+        closingBtn = new javax.swing.JButton();
         oneBtn = new javax.swing.JButton();
         twoBtn = new javax.swing.JButton();
         threeBtn = new javax.swing.JButton();
@@ -102,23 +95,23 @@ public class MainFrame extends javax.swing.JFrame {
         });
         numPadPanel.add(ceBtn);
 
-        cBtn.setBackground(new java.awt.Color(1, 50, 67));
-        cBtn.setText("C");
-        cBtn.addActionListener(new java.awt.event.ActionListener() {
+        openingBtn.setBackground(new java.awt.Color(1, 50, 67));
+        openingBtn.setText("(");
+        openingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cBtnActionPerformed(evt);
+                openingBtnActionPerformed(evt);
             }
         });
-        numPadPanel.add(cBtn);
+        numPadPanel.add(openingBtn);
 
-        backBtn.setBackground(new java.awt.Color(1, 50, 67));
-        backBtn.setText("<--");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
+        closingBtn.setBackground(new java.awt.Color(1, 50, 67));
+        closingBtn.setText(")");
+        closingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
+                closingBtnActionPerformed(evt);
             }
         });
-        numPadPanel.add(backBtn);
+        numPadPanel.add(closingBtn);
 
         oneBtn.setBackground(new java.awt.Color(149, 165, 166));
         oneBtn.setText("1");
@@ -315,44 +308,18 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ceBtnActionPerformed
-        temp = 0;
-        resTemp = 0;
-        isPointPressed = false;
-        isDividePressed = false;
-        isMultiplyPressed = false;
-        isSubtractPressed = false;
-        isAddPressed = false;
         digitDisplayText.setText("");
     }//GEN-LAST:event_ceBtnActionPerformed
 
-    private void cBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBtnActionPerformed
-        temp = 0;
-        resTemp = 0;
-        isPointPressed = false;
-        isDividePressed = false;
-        isMultiplyPressed = false;
-        isSubtractPressed = false;
-        isAddPressed = false;
-        digitDisplayText.setText("");
-    }//GEN-LAST:event_cBtnActionPerformed
+    private void openingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openingBtnActionPerformed
+        display = digitDisplayText.getText();
+        digitDisplayText.setText(display + "(");
+    }//GEN-LAST:event_openingBtnActionPerformed
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        String digitValueStr = digitDisplayText.getText();
-        String newValueStr = digitValueStr.replaceFirst(".$", "");
-        
-        if (!newValueStr.isEmpty()) {
-            temp = Double.parseDouble(newValueStr);
-            digitDisplayText.setText(newValueStr);   
-        }
-        
-        else {
-            temp = 0;
-            isPointPressed = false;
-            digitDisplayText.setText("");
-            JOptionPane.showMessageDialog(this, "No more previous.");
-            return;
-        }
-    }//GEN-LAST:event_backBtnActionPerformed
+    private void closingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closingBtnActionPerformed
+        display = digitDisplayText.getText();
+        digitDisplayText.setText(display + ")");
+    }//GEN-LAST:event_closingBtnActionPerformed
 
     private void oneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneBtnActionPerformed
         display = digitDisplayText.getText();
@@ -401,7 +368,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void negativeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negativeBtnActionPerformed
         display = digitDisplayText.getText();
-        digitDisplayText.setText("-" + display);
+        digitDisplayText.setText(display + " -");
     }//GEN-LAST:event_negativeBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
@@ -410,98 +377,51 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_zeroBtnActionPerformed
 
     private void pointBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointBtnActionPerformed
-        if (!isPointPressed) {
-            String digitValueStr = digitDisplayText.getText();
-            
-            if (!digitValueStr.isEmpty()) {
-                isPointPressed = true;
-                display = digitDisplayText.getText();
-                digitDisplayText.setText(display + ".");
-            }
-        }
+        display = digitDisplayText.getText();
+        digitDisplayText.setText(display + ".");
     }//GEN-LAST:event_pointBtnActionPerformed
 
     private void divideBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideBtnActionPerformed
-        if (!digitDisplayText.getText().isEmpty()) {
-            isDividePressed = true;
-            resTemp = Double.parseDouble(digitDisplayText.getText());
-            digitDisplayText.setText("");
-            
-            if (isPointPressed) {
-                isPointPressed = false;
-            }
+        display = digitDisplayText.getText();
+        
+        if (!display.isEmpty()) {
+            digitDisplayText.setText(display + " / ");
         }
     }//GEN-LAST:event_divideBtnActionPerformed
 
     private void multiplyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplyBtnActionPerformed
-        if (!digitDisplayText.getText().isEmpty()) {
-            isMultiplyPressed = true;
-            resTemp = Double.parseDouble(digitDisplayText.getText());
-            digitDisplayText.setText("");
-            
-            if (isPointPressed) {
-                isPointPressed = false;
-            }
+        display = digitDisplayText.getText();
+        
+        if (!display.isEmpty()) {
+            digitDisplayText.setText(display + " * ");
         }
     }//GEN-LAST:event_multiplyBtnActionPerformed
 
     private void subtractBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subtractBtnActionPerformed
-        if (!digitDisplayText.getText().isEmpty()) {
-            isSubtractPressed = true;
-            resTemp = Double.parseDouble(digitDisplayText.getText());
-            digitDisplayText.setText("");
-            
-            if (isPointPressed) {
-                isPointPressed = false;
-            }
+        display = digitDisplayText.getText();
+        
+        if (!display.isEmpty()) {
+            digitDisplayText.setText(display + " - ");
         }
     }//GEN-LAST:event_subtractBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        if (!digitDisplayText.getText().isEmpty()) {
-            isAddPressed = true;
-            resTemp = Double.parseDouble(digitDisplayText.getText());
-            digitDisplayText.setText("");
-            
-            if (isPointPressed) {
-                isPointPressed = false;
-            }
+        display = digitDisplayText.getText();
+        
+        if (!display.isEmpty()) {
+            digitDisplayText.setText(display + " + ");
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void equalsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalsBtnActionPerformed
-        if (!digitDisplayText.getText().isEmpty()) {
-            temp = Double.parseDouble(digitDisplayText.getText());
-            
-            if (isDividePressed) {
-                resTemp /= temp;
-            }
-            
-            else if (isMultiplyPressed) {
-                resTemp *= temp;
-            }
-            
-            else if (isSubtractPressed) {
-                resTemp -= temp;
-            }
-            
-            else if (isAddPressed) {
-                resTemp += temp;
-            }
-            
-            isPointPressed = true;
-            isDividePressed = false;
-            isMultiplyPressed = false;
-            isSubtractPressed = false;
-            isAddPressed = false;
-            digitDisplayText.setText(Double.toString(resTemp));
-        }
+        display = digitDisplayText.getText();
         
-        else {
-            isPointPressed = true;
-            JOptionPane.showMessageDialog(this, "Second value is null.");
+        if (display.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No expression detected.");
             return;
         }
+        
+        System.out.println(EvaluateString.evaluate(this.display));
     }//GEN-LAST:event_equalsBtnActionPerformed
 
     /**
@@ -541,9 +461,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
-    private javax.swing.JButton backBtn;
-    private javax.swing.JButton cBtn;
     private javax.swing.JButton ceBtn;
+    private javax.swing.JButton closingBtn;
     private javax.swing.JPanel digitDisplayPanel;
     private javax.swing.JTextField digitDisplayText;
     private javax.swing.JButton divideBtn;
@@ -557,6 +476,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton nineBtn;
     private javax.swing.JPanel numPadPanel;
     private javax.swing.JButton oneBtn;
+    private javax.swing.JButton openingBtn;
     private javax.swing.JPanel operationsPanel;
     private javax.swing.JButton pointBtn;
     private javax.swing.JButton sevenBtn;

@@ -131,26 +131,26 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ceBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="cBtn">
+            <Component class="javax.swing.JButton" name="openingBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="43" green="32" red="1" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C"/>
+                <Property name="text" type="java.lang.String" value="("/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openingBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="backBtn">
+            <Component class="javax.swing.JButton" name="closingBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="43" green="32" red="1" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;--"/>
+                <Property name="text" type="java.lang.String" value=")"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closingBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="oneBtn">
