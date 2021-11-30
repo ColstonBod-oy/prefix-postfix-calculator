@@ -16,6 +16,14 @@ public class EvaluateString {
         // Tokens can have whitespace
         char[] tokens = expression.toCharArray();
         
+        // Stores true if previous char is an operator
+        boolean isPrevOp = false;
+        
+        // Sets isPrevOP to true if expression begins with a negative sign
+        if (tokens[0] == '-') {
+            isPrevOp = true;
+        }
+        
         Stack<Double> operands = new Stack<Double>();
         Stack<Character> operators = new Stack<Character>();
         
@@ -28,8 +36,24 @@ public class EvaluateString {
             // Pushes numbers and a decimal point to operands stack 
             else if (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.') {
                 StringBuffer strBuff = new StringBuffer();
+                isPrevOp = false;
                 
                 while (i < tokens.length && (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.')) {
+                    strBuff.append(tokens[i++]);
+                }
+                
+                operands.push(Double.parseDouble(strBuff.toString()));
+                
+                // Corrects i offset caused by for loop
+                i--;
+            }
+            
+            // Pushes numbers, a decimal point, and a negative sign to operands stack 
+            else if (tokens[i] == '-' && isPrevOp == true) {
+                StringBuffer strBuff = new StringBuffer();
+                isPrevOp = false;
+                
+                while (i < tokens.length && ((tokens[i] >= '0' && tokens[i] <= '9') || (tokens[i] == '.' || tokens[i] == '-'))) {
                     strBuff.append(tokens[i++]);
                 }
                 
@@ -56,6 +80,8 @@ public class EvaluateString {
             
             // Pushes EMDAS to operators stack
             else if (tokens[i] == '^' || tokens[i] == '*' || tokens[i] == '/' || tokens[i] == '+' || tokens[i] == '-') {
+                isPrevOp = true;
+                
                 // Checks the top of operators stack's precedence to current token
                 while (!operators.empty() && hasPrecedence(tokens[i], operators.peek())) {
                     // Evaluates top operator if it has higher or same precedence  
@@ -81,7 +107,7 @@ public class EvaluateString {
             return false;
         }
         
-        else if (op1 == '^' && op2 == '*' || op2 == '/') {
+        else if (op1 == '^' && (op2 == '*' || op2 == '/' || op2 == '+' || op2 == '-')) {
             return false;
         }
         

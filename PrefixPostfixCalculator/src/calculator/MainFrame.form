@@ -252,15 +252,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nineBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="negativeBtn">
+            <Component class="javax.swing.JButton" name="exponentBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="43" green="32" red="1" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="-+"/>
+                <Property name="text" type="java.lang.String" value="^"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="negativeBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exponentBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="zeroBtn">

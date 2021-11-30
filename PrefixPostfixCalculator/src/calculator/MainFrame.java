@@ -16,10 +16,13 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     String display = "";
+    String noSpace = "";
+    char lastChar = ' ';
     
     public MainFrame() {
         initComponents();
         setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -47,7 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
         sevenBtn = new javax.swing.JButton();
         eightBtn = new javax.swing.JButton();
         nineBtn = new javax.swing.JButton();
-        negativeBtn = new javax.swing.JButton();
+        exponentBtn = new javax.swing.JButton();
         zeroBtn = new javax.swing.JButton();
         pointBtn = new javax.swing.JButton();
         operationsPanel = new javax.swing.JPanel();
@@ -194,14 +197,14 @@ public class MainFrame extends javax.swing.JFrame {
         });
         numPadPanel.add(nineBtn);
 
-        negativeBtn.setBackground(new java.awt.Color(1, 50, 67));
-        negativeBtn.setText("-+");
-        negativeBtn.addActionListener(new java.awt.event.ActionListener() {
+        exponentBtn.setBackground(new java.awt.Color(1, 50, 67));
+        exponentBtn.setText("^");
+        exponentBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                negativeBtnActionPerformed(evt);
+                exponentBtnActionPerformed(evt);
             }
         });
-        numPadPanel.add(negativeBtn);
+        numPadPanel.add(exponentBtn);
 
         zeroBtn.setBackground(new java.awt.Color(149, 165, 166));
         zeroBtn.setText("0");
@@ -366,10 +369,10 @@ public class MainFrame extends javax.swing.JFrame {
         digitDisplayText.setText(display + "9");
     }//GEN-LAST:event_nineBtnActionPerformed
 
-    private void negativeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negativeBtnActionPerformed
+    private void exponentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exponentBtnActionPerformed
         display = digitDisplayText.getText();
-        digitDisplayText.setText(display + " -");
-    }//GEN-LAST:event_negativeBtnActionPerformed
+        digitDisplayText.setText(display + " ^ ");
+    }//GEN-LAST:event_exponentBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
         display = digitDisplayText.getText();
@@ -400,7 +403,18 @@ public class MainFrame extends javax.swing.JFrame {
     private void subtractBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subtractBtnActionPerformed
         display = digitDisplayText.getText();
         
+        // Gets the last character of display if it's not empty
         if (!display.isEmpty()) {
+            noSpace = display.replaceAll("\\s", "");
+            lastChar = noSpace.charAt(noSpace.length() - 1);
+        }
+        
+        // Uses negative sign if display is empty or last character is an operator
+        if (display.isEmpty() || lastChar == '^' || lastChar == '*' || lastChar == '/' || lastChar == '+' || lastChar == '-') {
+            digitDisplayText.setText(display + "-");
+        }
+        
+        else {
             digitDisplayText.setText(display + " - ");
         }
     }//GEN-LAST:event_subtractBtnActionPerformed
@@ -468,11 +482,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton divideBtn;
     private javax.swing.JButton eightBtn;
     private javax.swing.JButton equalsBtn;
+    private javax.swing.JButton exponentBtn;
     private javax.swing.JButton fiveBtn;
     private javax.swing.JButton fourBtn;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton multiplyBtn;
-    private javax.swing.JButton negativeBtn;
     private javax.swing.JButton nineBtn;
     private javax.swing.JPanel numPadPanel;
     private javax.swing.JButton oneBtn;
