@@ -435,7 +435,11 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         
-        System.out.println(EvaluateString.evaluate(this.display));
+        digitDisplayText.setText(String.valueOf(EvaluateString.evaluate(this.display)));
+        
+        ResultFrame result = new ResultFrame();
+        result.setVisible(true);
+        System.out.println(PostfixString.postfix(this.display));
     }//GEN-LAST:event_equalsBtnActionPerformed
 
     /**

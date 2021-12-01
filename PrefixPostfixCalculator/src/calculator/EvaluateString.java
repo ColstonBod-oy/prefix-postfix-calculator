@@ -70,7 +70,7 @@ public class EvaluateString {
             
             // Evaluates current expression inside parentheses 
             else if (tokens[i] == ')') {
-                while (operators.peek() != '(') {
+                while (!operators.isEmpty() && operators.peek() != '(') {
                     operands.push(evaluateExp(operators.pop(), operands.pop(), operands.pop()));
                 }
                 
@@ -83,7 +83,7 @@ public class EvaluateString {
                 isPrevOp = true;
                 
                 // Checks the top of operators stack's precedence to current token
-                while (!operators.empty() && hasPrecedence(tokens[i], operators.peek())) {
+                while (!operators.isEmpty() && hasPrecedence(tokens[i], operators.peek())) {
                     // Evaluates top operator if it has higher or same precedence  
                     operands.push(evaluateExp(operators.pop(), operands.pop(), operands.pop()));
                 }
@@ -93,7 +93,7 @@ public class EvaluateString {
         }
         
         // Evaluates remaining expressions
-        while (!operators.empty()) {
+        while (!operators.isEmpty()) {
             operands.push(evaluateExp(operators.pop(), operands.pop(), operands.pop()));
         }
         
