@@ -4,6 +4,8 @@
  */
 package calculator;
 
+import java.awt.Color;
+
 /**
  *
  * @author User
@@ -13,10 +15,13 @@ public class ResultFrame extends javax.swing.JFrame {
     /**
      * Creates new form ResultFrame
      */
-    public ResultFrame() {
+    
+    public ResultFrame(String answer, String postfix, String prefix) {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
+        this.resultTextArea.setText("Answer: " + answer + "\n\n" + "Postfix: " + postfix + "\n\n" + "Prefix: " + prefix);
+        this.resultTextArea.setBackground(new Color(149, 165, 166));
     }
 
     /**
@@ -28,19 +33,25 @@ public class ResultFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        resultPane = new javax.swing.JScrollPane();
+        resultScrollPane = new javax.swing.JScrollPane();
+        resultTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        resultTextArea.setEditable(false);
+        resultTextArea.setColumns(20);
+        resultTextArea.setRows(5);
+        resultScrollPane.setViewportView(resultTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(resultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(resultScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(resultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(resultScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -76,12 +87,13 @@ public class ResultFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResultFrame().setVisible(true);
+                new ResultFrame("", "", "").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane resultPane;
+    private javax.swing.JScrollPane resultScrollPane;
+    private javax.swing.JTextArea resultTextArea;
     // End of variables declaration//GEN-END:variables
 }

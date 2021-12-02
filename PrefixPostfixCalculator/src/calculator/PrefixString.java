@@ -10,11 +10,9 @@ import java.util.Stack;
  *
  * @author User
  */
-public class PostfixString {
+public class PrefixString {
     
-    public static String postfix(String expression) {
-        String result = "";
-        
+    public static String prefix(String expression) {
         // Tokens can have whitespace
         char[] tokens = expression.toCharArray();
         
@@ -26,6 +24,7 @@ public class PostfixString {
             isPrevOp = true;
         }
         
+        Stack<String> operands = new Stack<String>();
         Stack<Character> operators = new Stack<Character>();
         
         // Returns Invalid Character! if unrecognized char was used  
@@ -35,24 +34,34 @@ public class PostfixString {
                 continue;
             }
             
-            // Adds numbers and a decimal point to result string
+            // Pushes numbers and a decimal point to operands stack 
             else if (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.') {
-                // Adds space before the numbers if previous char is an operator 
-                if (isPrevOp == true) {
-                    result += " " + tokens[i];
-                }
-                
-                else {
-                    result += tokens[i];
-                }
-                
+                StringBuffer strBuff = new StringBuffer();
                 isPrevOp = false;
+                
+                while (i < tokens.length && (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.')) {
+                    strBuff.append(tokens[i++]);
+                }
+                
+                operands.push(strBuff.toString());
+                
+                // Corrects i offset caused by for loop
+                i--;
             }
             
-            // Adds a negative sign to result string
+            // Pushes numbers, a decimal point, and a negative sign to operands stack 
             else if (tokens[i] == '-' && isPrevOp == true) {
-                result += " " + tokens[i];
+                StringBuffer strBuff = new StringBuffer();
                 isPrevOp = false;
+                
+                while (i < tokens.length && ((tokens[i] >= '0' && tokens[i] <= '9') || (tokens[i] == '.' || tokens[i] == '-'))) {
+                    strBuff.append(tokens[i++]);
+                }
+                
+                operands.push(strBuff.toString());
+                
+                // Corrects i offset caused by for loop
+                i--;
             }
             
             // Pushes opening parenthesis to operators stack
@@ -61,10 +70,10 @@ public class PostfixString {
                 isPrevOp = true;
             }
             
-            // Adds top of operators stack to result up to opening parenthesis  
+            // Concatenates current expression inside parentheses
             else if (tokens[i] == ')') {
                 while (!operators.isEmpty() && operators.peek() != '(') {
-                    result += " " + operators.pop();
+                    operands.push(concatenateExp(operators.pop(), operands.pop(), operands.pop()));
                 }
                 
                 // Removes the remaining opening parenthesis
@@ -77,8 +86,8 @@ public class PostfixString {
                 
                 // Compares the top of operators stack's precedence level to current token
                 while (!operators.isEmpty() && precLevel(tokens[i]) <= precLevel(operators.peek())) {
-                    // Adds top operator if it has higher or same precedence level  
-                    result += " " + operators.pop();
+                    // Concatenates top operator if it has higher or same precedence level  
+                    operands.push(concatenateExp(operators.pop(), operands.pop(), operands.pop()));
                 }
                 
                 operators.push(tokens[i]);
@@ -89,17 +98,13 @@ public class PostfixString {
             }
         }
         
-        // Adds remaining operators
+        // Concatenates remaining expressions
         while (!operators.isEmpty()) {
-            if (operators.peek() == '(') {
-                return "Invalid Expression!";
-            }
-            
-            result += " " + operators.pop(); 
+            operands.push(concatenateExp(operators.pop(), operands.pop(), operands.pop())); 
         }
         
         // Returns final result
-        return result;
+        return operands.pop();
     }
     
     // Returns operator's precedence level
@@ -118,6 +123,11 @@ public class PostfixString {
         }
         
         return -1;
+    }
+    
+    // Concatenates top of operators stack to top 2 of operands stack
+    private static String concatenateExp(char op, String s1, String s2) {
+        return op + " " + s2 + " " + s1 + " ";
     }
     
 }

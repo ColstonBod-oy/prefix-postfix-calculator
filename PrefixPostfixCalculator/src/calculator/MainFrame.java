@@ -15,9 +15,8 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
-    String display = "";
-    String noSpace = "";
-    char lastChar = ' ';
+    private String display = "";
+    private char lastChar = ' ';
     
     public MainFrame() {
         initComponents();
@@ -405,12 +404,12 @@ public class MainFrame extends javax.swing.JFrame {
         
         // Gets the last character of display if it's not empty
         if (!display.isEmpty()) {
-            noSpace = display.replaceAll("\\s", "");
+            String noSpace = display.replaceAll("\\s", "");
             lastChar = noSpace.charAt(noSpace.length() - 1);
         }
         
         // Uses negative sign if display is empty or last character is an operator
-        if (display.isEmpty() || lastChar == '^' || lastChar == '*' || lastChar == '/' || lastChar == '+' || lastChar == '-') {
+        if (display.isEmpty() || lastChar == '^' || lastChar == '*' || lastChar == '/' || lastChar == '+' || lastChar == '-' || lastChar == '(') {
             digitDisplayText.setText(display + "-");
         }
         
@@ -435,11 +434,14 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         
-        digitDisplayText.setText(String.valueOf(EvaluateString.evaluate(this.display)));
+        // Converts infix string to postfix and prefix before evaluating 
+        String postfix = PostfixString.postfix(this.display);
+        String prefix = PrefixString.prefix(this.display);
+        String answer = String.valueOf(EvaluateString.evaluate(postfix));
+        digitDisplayText.setText(answer);
         
-        ResultFrame result = new ResultFrame();
+        ResultFrame result = new ResultFrame(answer, postfix, prefix);
         result.setVisible(true);
-        System.out.println(PostfixString.postfix(this.display));
     }//GEN-LAST:event_equalsBtnActionPerformed
 
     /**
